@@ -13,10 +13,18 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # 分区名称
 PARTITION=$1
 
-# 检查分区名是否有效
+# 定义固定大小分区的大小
+FIXED_SIZE="128M"
+
+# 检查分区名是否有效并设置大小
 case $PARTITION in
-    "app"|"oemven"|"userdata")
-        # 有效的分区名
+    "app"|"oemven")
+        # 使用固定大小
+        PARTITION_SIZE=$FIXED_SIZE
+        ;;
+    "userdata")
+        # 使用自动大小
+        PARTITION_SIZE="auto"
         ;;
     *)
         echo "Error: Invalid partition name"
@@ -47,8 +55,9 @@ echo "Creating image for $PARTITION..."
 echo "Source: $SOURCE_DIR"
 echo "Target: $IMAGE_NAME"
 echo "Filesystem: $FS_TYPE"
+echo "Size: $PARTITION_SIZE"
 
-"${SCRIPT_DIR}/mk-image.sh" "$SOURCE_DIR" "$IMAGE_NAME" "$FS_TYPE" "$PARTITION"
+"${SCRIPT_DIR}/mk-image.sh" "$SOURCE_DIR" "$IMAGE_NAME" "$FS_TYPE" "$PARTITION_SIZE" "$PARTITION"
 
 # 检查执行结果
 if [ $? -eq 0 ]; then
