@@ -3,7 +3,7 @@
 # 检查参数
 if [ $# -ne 1 ]; then
     echo "Usage: $0 <partition_name>"
-    echo "Supported partitions: app, oemven, userdata"
+    echo "Supported partitions: app, oemven, userdata, vendor, hold"
     exit 1
 fi
 
@@ -13,14 +13,19 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # 分区名称
 PARTITION=$1
 
-# 定义固定大小分区的大小
-FIXED_SIZE="128M"
+# 定义不同分区的大小
+FIXED_SIZE_LARGE="128M"
+FIXED_SIZE_SMALL="16M"
 
 # 检查分区名是否有效并设置大小
 case $PARTITION in
     "app"|"oemven")
-        # 使用固定大小
-        PARTITION_SIZE=$FIXED_SIZE
+        # 使用较大固定大小
+        PARTITION_SIZE=$FIXED_SIZE_LARGE
+        ;;
+    "vendor"|"hold")
+        # 使用较小固定大小
+        PARTITION_SIZE=$FIXED_SIZE_SMALL
         ;;
     "userdata")
         # 使用自动大小
@@ -28,7 +33,7 @@ case $PARTITION in
         ;;
     *)
         echo "Error: Invalid partition name"
-        echo "Supported partitions: app, oemven, userdata"
+        echo "Supported partitions: app, oemven, userdata, vendor, hold"
         exit 1
         ;;
 esac
