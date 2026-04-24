@@ -14,13 +14,17 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PARTITION=$1
 
 # 定义不同分区的大小
+FIXED_SIZE_APP="512M"
 FIXED_SIZE_LARGE="128M"
 FIXED_SIZE_SMALL="16M"
 
 # 检查分区名是否有效并设置大小
 case $PARTITION in
-    "app"|"oemven")
+    "app")
         # 使用较大固定大小
+        PARTITION_SIZE=$FIXED_SIZE_APP
+        ;;
+    "oemven")
         PARTITION_SIZE=$FIXED_SIZE_LARGE
         ;;
     "vendor"|"hold")

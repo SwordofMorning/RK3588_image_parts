@@ -1,5 +1,7 @@
 #! /bin/bash
 
+echo 1 > /dev/jp_hgd_gpio_ctl_enable_refrigerator
+
 export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/var/run}
 export LD_LIBRARY_PATH=/app/pre/test_lib/:$LD_LIBRARY_PATH
 
