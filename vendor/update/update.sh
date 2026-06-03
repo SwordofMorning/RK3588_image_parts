@@ -39,7 +39,7 @@ echo "正在停止业务进程..."
 
 # 先尝试使用 killall 停止，并给予 2 秒缓冲时间
 # 替换 litelog, mosquitto, my_ui_app 为你实际的进程名
-SERVICES=("litelog" "mosquitto" "HGD")
+SERVICES=("vo" "vi_vis" "pre" "gwp_demo" "HGD" "litelog" "mosquitto")
 
 for svc in "${SERVICES[@]}"; do
     if pgrep -x "$svc" > /dev/null; then
@@ -51,7 +51,7 @@ done
 # 2. 额外处理残留的 SQLite 锁或文件句柄
 # 如果仍然有残留进程，执行强制清理
 echo "确保所有相关进程已退出..."
-sleep 2
+sleep 5
 
 # 卸载分区
 echo "正在卸载 $MOUNT_POINT..."
